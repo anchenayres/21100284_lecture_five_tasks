@@ -1,13 +1,90 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body{
+    background-color: #f0f1f5;
+    padding-top: 10vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1{
+    padding: 0;
+    margin: 0;    
+    color: rgb(255, 255, 255);
+    font-family: 'Nunito', sans-serif;
+    
 }
+
+p {
+    color: rgb(255, 255, 255);
+    font-family: 'Nunito', sans-serif;
+}
+form{
+    width: 40%;
+    position: relative;
+    margin:0 auto;
+    background-color: #cfabf6;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 10px 10px 27px 0px rgba(0,0,0,0.18);
+    -webkit-box-shadow: 10px 10px 27px 0px rgba(0,0,0,0.18);
+    -moz-box-shadow: 10px 10px 27px 0px rgba(0,0,0,0.18);
+
+}
+
+.message {
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    background-color: salmon;
+    margin-bottom: 20px;
+}
+
+input{
+    width: 95%;
+    height: 35px;
+    border: 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    outline: none;
+    background-color: #f7f7f7;
+    padding-left: 5%;
+}
+
+.left{
+    margin-right: 3%;
+}
+
+button{
+    width: 20%;
+    float: right;
+    height: 35px;
+    margin-top: -30vh;
+    margin-right: 10vh;
+
+    background-color: #32066c;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.names{
+    width: 50%;
+}
+
+
+
+.userCon{
+    width: 90%;
+}
+
+.passCon{
+    width: 50%;
+}
+.emailCon {
+    width:50%;
+}
+.userCon input{
+    width: 50%;
+ 
+}
+
+
+
+
