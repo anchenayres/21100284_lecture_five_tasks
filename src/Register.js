@@ -4,12 +4,11 @@ import React, { useState } from 'react'
 const Register = () => {
 
 
-    const {inputs, setInputs} = useState({
+    const [inputs, setInputs] = useState({
         first: '',
         last: '',
         email: '',
         username: '',
-        contact: '',
         password: '',
         passwordCon: '',
 
@@ -19,12 +18,9 @@ const Register = () => {
     const [lastError, setLastError] = useState();
     const [emailError, setEmailError] = useState();
     const [usernameError, setUsernameError] = useState();
-    const [contactError, setContactError] = useState();
     const [passwordError, setPasswordError] = useState();
     const [passwordConError, setPasswordConError] = useState();
 
-    const [emailAvail, setEmailAvail] = useState();
-    const [userAvail, setUserAvail] = useState();
 
     const firstVal = (e) => { //e is for events
         const value = e.target.value;
@@ -53,11 +49,10 @@ const Register = () => {
         .then(function(response) {
             console.log(response);
             if(response.data === "Available") {
-                setEmailAvail();
+                setEmailError();
             } else if(response.data === "Not Available"){ 
                 setEmailError("This Email is not Available")
             } else if(response.data === '') {
-                setEmailAvail();
                 setEmailError();
             }
         });
@@ -74,14 +69,93 @@ const Register = () => {
         .then(function(response) {
             console.log(response);
             if(response.data === "Available") {
-                setUserAvail();
+                setUsernameError();
             } else if(response.data === "Not Available"){ 
-                setUserAvail("This Username is not Available")
+                setUsernameError("This Username is not Available")
             } else if(response.data === '') {
-                setUserAvail();
                 setUsernameError();
             }
         });
+    }
+
+    const passwordVal = ( e ) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(\W|_)).{5,}$/;
+
+        const value = e.target.value;
+        setInputs({...inputs, password: value});
+        if(inputs.password !== '') {
+            setPasswordError();
+        }
+
+        if(!value.match(passwordRegex)){
+            setPasswordError('Password does not meed the criteria')
+        }
+    }
+
+    const passwordConVal = ( e ) => {
+        const value = e.target.value;
+        setInputs({...inputs, passwordCon: value});
+        if(inputs.password === value) {
+            setPasswordConError();
+        } else {
+            setPasswordConError('Your passwords does not match.')
+        }
+    }
+
+    const handleSubmit = ( e ) => {
+        e.preventDefault();
+
+
+        if(inputs.first === ''){
+            setNameError('What is your name');
+            console.log('hey')
+        } else {
+            setNameError();
+        }
+
+        if(inputs.last === ''){
+            setLastError('What is your name')
+        } else {
+            setLastError();
+        }
+
+        if(inputs.email === ''){
+            setEmailError('What is your name')
+        } else {
+            setEmailError();
+        }
+
+        if(inputs.username === ''){
+            setUsernameError('What is your name')
+        } else {
+            setUsernameError();
+        }
+
+        if(inputs.password === ''){
+            setPasswordError('What is your name')
+        } else {
+            setPasswordError();
+        }
+
+        if(inputs.passwordCon === ''){
+            setPasswordConError('What is your name')
+        } else {
+            setPasswordConError();
+        }
+
+        let result = Object.values( inputs ).some(item => item === '' );
+
+        if( result ) {
+            console.log('There is an Error');
+            alert('ge')
+        } else {
+            axios.post( 'http://localhost/api/addUSer.php', inputs )
+            .then( ( res ) => {
+                console.log(res);
+                if( res.status === 200 ) {
+                }
+            } );
+        }
     }
 
 
@@ -91,30 +165,32 @@ const Register = () => {
               <h1>Sign Up to Trackalot</h1>
               <p>Please fill in your details below</p>
               <div className='names'>
-                  <input name="first" className='left' type="text" placeholder='First Name' />
-                  <p>{nameError}</p>
-                  <input name='last' type="text" placeholder='Last Name'/>
-                  <p>{lastError}</p>
+                  <input name="first" className='left' type="text" placeholder='First Name' onChange={firstVal}/>
+                  <h5>{nameError}</h5>
+                  <input name='last' type="text" placeholder='Last Name' onChange={lastVal}/>
+                  <h5>{lastError}</h5>
               </div>      
               <div className='statusIcon'>
                   <img src=""/>
               </div>
               <div className='emailCon'>
-              <input name="email" type="email" placeholder='Your Email'/>
+              <input name="email" type="email" placeholder='Your Email' onChange={emailVal} onBlur={validateEmail}/>
               </div>
-              <p>{emailError}</p>
+              <h5>{emailError}</h5>
               <div className='userCon'>
                   <div className='statusIconUser'>
                       <img src=""/>
                   </div>
-                  <input name="username" className='left' type="username" placeholder='Enter Username' />
+                  <input name="username" className='left' type="username" placeholder='Enter Username' onChange={userNameVal} onBlur={validateUser}/>
+                  <h5>{usernameError}</h5>
               </div>
               <div className='passCon'>
-                  <input name="password" type="password" placeholder='Enter Password' />
-                  <input name="conPass" type="password" placeholder='Confirm Password'/>
-                  <p>{emailError}</p>
+                  <input name="password" type="password" placeholder='Enter Password' onChange={passwordVal}/>
+                  <h5>{passwordError}</h5>
+                  <input name="conPass" type="password" placeholder='Confirm Password' onChange={passwordConVal}/>
+                  <h5>{passwordConError}</h5>
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit" onClick={handleSubmit}>Submit</button>
           </form>
               
       </div>
